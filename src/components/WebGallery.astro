@@ -1,0 +1,160 @@
+---
+// Componente WebGallery.astro
+
+// Array de imágenes con enlaces y títulos
+const images = [
+  { 
+    src: '/webs/bailartesana.png', 
+    categories: ['wordpress'], 
+    title: 'Bailartesana',
+    link: 'https://bailartesana.com/' 
+  },
+  { 
+    src: '/webs/chevrosur.png', 
+    categories: ['wordpress'], 
+    title: 'Chevrosur', 
+    link: 'https://chevrosur.com.ar/' 
+  },
+	{ 
+    src: '/webs/senillosa.png', 
+    categories: ['wordpress', 'appsheet'], 
+    title: 'Municipalidad de Senillosa',
+    link: 'https://senillosa.gob.ar/' 
+  },
+	{ 
+    src: '/webs/mariacarballo.png', 
+    categories: ['wordpress', 'appsheet'],
+    title: 'María Carballo',  
+    link: 'https://mariacarballo.com/' 
+  },
+	{ 
+    src: '/webs/viajaconeuforia.png', 
+    categories: ['wordpress', 'woocommerce'], 
+    title: 'Euforia Viajes',  
+    link: 'https://viajaconeuforia.com/' 
+  },
+	{ 
+    src: '/webs/vivianacopello.png', 
+    categories: ['wordpress', 'woocommerce'],
+    title: 'Viviana Copello',  
+    link: 'https://vivianacopello.com/' 
+  },
+  { 
+    src: '/webs/norpat.png', 
+    categories: ['wordpress'], 
+    title: 'NorPat',   
+    link: 'https://norpat.ar/'
+  },
+	{ 
+    src: '/webs/estudiodem.png', 
+    categories: ['wordpress'], 
+    title: 'Estudio Dem',   
+    link: 'https://estudiodem.com/'
+  },
+  { 
+    src: '/webs/delmatesangregorio.png', 
+    categories: ['tiendanube'], 
+    title: 'Del Mate San Gregorio',   
+    link: 'https://delmatesangregorio.mitiendanube.com/' 
+  }
+];
+---
+
+<style>
+	/* Estilo para la galería */
+	.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr); /* Cambia a 3 columnas */
+  }
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 1rem;
+  align-content: flex-end;
+}
+
+.content-wrapper {
+  width: 100%;
+}
+
+.title {
+  display: block;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-top: auto;
+}
+
+.filter-item img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  border-radius: 8px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.filter-item:hover img {
+  transform: scale(0.99); /* Zoom out sutil */
+  opacity: 0.9;
+}
+
+	</style>
+
+<div class="filter-buttons flex items-center justify-center py-4 md:py-8 flex-wrap">
+  <!-- Botones de filtro -->
+  <button type="button" class="filter-btn text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800" data-category="all">Todas las páginas</button>
+  <button type="button" class="filter-btn text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800" data-category="wordpress">WordPress</button>
+	<button type="button" class="filter-btn text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800" data-category="appsheet">WordPress y Appsheet</button>
+  <button type="button" class="filter-btn text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800" data-category="woocommerce">WooCommerce</button>
+  <button type="button" class="filter-btn text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800" data-category="tiendanube">TiendaNube</button>
+</div>
+
+<!-- Galería de imágenes -->
+<div class="gallery">
+  {images.map(image => (
+    <div class={`filter-item ${(image.categories || []).join(' ')}`} data-categories={(image.categories || []).join(' ')}>
+      <div class="content-wrapper">
+        <span class="title">{image.title}</span>
+        <a href={image.link} target="_blank" rel="noopener noreferrer">
+          <img src={image.src} alt={image.title} loading="lazy" />
+        </a>
+      </div>
+    </div>
+  ))}
+</div>
+
+
+<script>
+  // Agrega el evento de filtro a cada botón
+  document.querySelectorAll('.filter-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const category = e.target.dataset.category;
+      filterSelection(category);
+    });
+  });
+
+  function filterSelection(category) {
+    const items = document.querySelectorAll('.filter-item');
+    items.forEach(item => {
+      const categories = item.dataset.categories.split(' ');
+      if (category === 'all' || categories.includes(category)) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // Muestra todas las imágenes por defecto al cargar
+  document.addEventListener('DOMContentLoaded', () => filterSelection('all'));
+</script>

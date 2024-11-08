@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro"
 
+import WebGallery from "@/components/WebGallery.astro"
 import AboutMe from "@/components/AboutMe.astro"
 import Briefcase from "@/components/icons/Briefcase.astro"
 import CodeIcon from "@/components/icons/Code.astro"
@@ -13,8 +14,8 @@ import TitleSection from "@/components/TitleSection.astro"
 ---
 
 <Layout
-  title="Porfolio de midudev - Desarrollador y Programador Web con 15 años de experiencia"
-  description="Contrata a midudev para crear tu aplicación web o móvil. Desarrollador Web y Creador de Contenido. Especializado en crear aplicaciones únicas."
+  title="Portfolio de Gonzalo Espina - Desarrollador y Programador Web con 4 años de experiencia"
+  description="Contrata a Gonzalo Espina para crear tu página o aplicación web."
 >
   <main class="px-4">
     <SectionContainer class="py-16 md:py-36">
@@ -31,10 +32,18 @@ import TitleSection from "@/components/TitleSection.astro"
       <Experience />
     </SectionContainer>
 
-    <SectionContainer id="proyectos">
+    <SectionContainer id="paginas-web">
       <TitleSection>
         <CodeIcon class="size-7" />
-        Proyectos
+        Páginas Web
+      </TitleSection>
+      <WebGallery />
+    </SectionContainer>
+
+    <SectionContainer id="aplicaciones">
+      <TitleSection>
+        <CodeIcon class="size-7" />
+        Algunas de mis Aplicaciones
       </TitleSection>
       <Projects />
     </SectionContainer>
