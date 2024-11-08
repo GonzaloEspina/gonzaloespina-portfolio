@@ -136,21 +136,27 @@ const images = [
 
 <script>
   // Agrega el evento de filtro a cada botón
-  document.querySelectorAll('.filter-btn').forEach(button => {
-    button.addEventListener('click', (e) => {
-      const category = e.target.dataset.category;
-      filterSelection(category);
+  document.querySelectorAll('.filter-btn').forEach((button: Element) => {
+    const buttonElement = button as HTMLElement; // Aseguramos que sea un HTMLElement
+    buttonElement.addEventListener('click', (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && target.dataset.category) {
+        const category = target.dataset.category;
+        filterSelection(category);
+      }
     });
   });
 
-  function filterSelection(category) {
+  // Función de filtro
+  function filterSelection(category: string): void {
     const items = document.querySelectorAll('.filter-item');
-    items.forEach(item => {
-      const categories = item.dataset.categories.split(' ');
+    items.forEach((item: Element) => {
+      const itemElement = item as HTMLElement; // Aseguramos que sea un HTMLElement
+      const categories = itemElement.dataset.categories?.split(' ') || [];
       if (category === 'all' || categories.includes(category)) {
-        item.style.display = 'block';
+        itemElement.style.display = 'block';
       } else {
-        item.style.display = 'none';
+        itemElement.style.display = 'none';
       }
     });
   }
